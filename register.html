@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Register - jQuery Validation Project</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>
+
+  <style>
+    body { background:#ffe6f0; min-height:100vh; }
+    .card { border-radius:15px; box-shadow:0 6px 20px rgba(0,0,0,0.1); background:white; }
+    .error { color:#d93025; font-size:0.9em; margin-top:0.25rem; }
+    .btn-success { background:#d63384; border:none; }
+    .btn-success:hover { background:#c21873; }
+  </style>
+</head>
+<body>
+  <div class="container py-5">
+    <div class="row justify-content-center">
+      <div class="col-md-7">
+        <div class="card p-4">
+          <h4 class="mb-3 text-center" style="color:#d63384;">🌸 Create Account</h4>
+          <form id="registerForm" novalidate>
+            <div class="mb-3">
+              <label for="name" class="form-label">Full Name</label>
+              <input type="text" name="name" id="name" class="form-control" placeholder="Enter full name">
+            </div>
+            <div class="mb-3">
+              <label for="email" class="form-label">Email</label>
+              <input type="email" name="email" id="email" class="form-control" placeholder="Enter email">
+            </div>
+            <div class="mb-3">
+              <label for="regPassword" class="form-label">Password</label>
+              <input type="password" name="regPassword" id="regPassword" class="form-control" placeholder="At least 6 characters">
+            </div>
+            <div class="mb-3">
+              <label for="confirmPassword" class="form-label">Confirm Password</label>
+              <input type="password" name="confirmPassword" id="confirmPassword" class="form-control" placeholder="Repeat password">
+            </div>
+            <div id="registerAlert" class="mb-3" style="display:none;"></div>
+            <div class="d-grid gap-2">
+              <button type="submit" class="btn btn-success">Register</button>
+              <a href="login.html" class="btn btn-outline-secondary">Back to Login</a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+$(function() {
+  $("#registerForm").validate({
+    rules: {
+      name: { required: true },
+      email: { required: true, email: true },
+      regPassword: { required: true, minlength: 6 },
+      confirmPassword: { required: true, equalTo: "#regPassword" }
+    },
+    messages: {
+      name: { required: "Please enter your full name." },
+      email: { required: "Please enter your email.", email: "Enter a valid email." },
+      regPassword: { required: "Please provide a password.", minlength: "At least 6 characters." },
+      confirmPassword: { required: "Please confirm password.", equalTo: "Passwords do not match." }
+    },
+    errorClass: "error",
+    submitHandler: function(form) {
+      $("#registerAlert").removeClass().css({color:"#198754",fontWeight:"600"}).text("✅ Registration successful! Redirecting to login...").show();
+      setTimeout(function(){ window.location.href = "login.html"; }, 1200);
+    }
+  });
+});
+</script>
+</body>
+</html>
